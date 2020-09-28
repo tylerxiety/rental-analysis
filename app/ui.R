@@ -15,7 +15,7 @@ fluidPage(
     #Panel 1
     tabPanel(
       title = 'Overview',
-      tags$h5('Melbourne\'s short-term rentals Market overview'),
+      tags$h3('Short-term Rental Properties in Melbourne (Greater), Victoria'),
       # row 1
       wellPanel(fluidRow(
         column(2,tags$h3('Properties'),
@@ -23,12 +23,12 @@ fluidPage(
                selectInput(
                  inputId = 'list_sub',
                  label = 'Select a city/area',
-                 choices=c('All', df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
+                 choices=c('All', 'Melbourne'='Melbourne',df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
                  selectize = TRUE),
                
                # input 1.1.2, select property type
                selectInput(
-                 inputId = 'prop_type',
+                 inputId = 'list_ptype',
                  label='Select a property type',
                  choices=c('All',
                           'Apartment'='apartment',
@@ -41,7 +41,7 @@ fluidPage(
                               
                # input 1.1.3, select room type
                selectInput(
-                 inputId = 'room_type',
+                 inputId = 'list_rtype',
                  label='Select a room type',
                  choices=c('All',
                           'Entire apt/home'='entire home/apt',
@@ -53,13 +53,13 @@ fluidPage(
                
                #input 1.1.4, select new list or not
                checkboxInput(
-                 inputId = 'new_list',
+                 inputId = 'list_new',
                  label = 'Show new listings only'
                ),
                
                #input 1.1.5, select Luxe list or not
                checkboxInput(
-                 inputId = 'lux_list',
+                 inputId = 'list_lux',
                  label = 'Show Luxe properties* only'
                ),
                tags$h5('*Luxe properties are high-end properties approved by Airbnb.')
@@ -76,7 +76,7 @@ fluidPage(
                selectInput(
                  inputId = 'host_sub',
                  label = 'Select a city/area',
-                 choices=c('All', df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
+                 choices=c('All', 'Melbourne'='Melbourne',df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
                  selectize = TRUE),
 
                # input 1.2.2, host type
@@ -120,12 +120,12 @@ fluidPage(
                  selectInput(
                    inputId = 'price_sub',
                    label = 'Select a city/area',
-                   choices=c('All', df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
+                   choices=c('All', 'Melbourne'='Melbourne',df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
                    selectize = TRUE),
                  
                  #input 1.3.2, price by property type
                  selectInput(
-                   inputId = 'p_prop_type',
+                   inputId = 'price_ptype',
                    label='Select a property type',
                    choices=c('All',
                              'Apartment'='apartment',
@@ -137,7 +137,7 @@ fluidPage(
                  ),
                  # input 1.3.3, price by room type
                  selectInput(
-                   inputId = 'p_room_type',
+                   inputId = 'price_rtype',
                    label='Select a room type',
                    choices=c('All',
                              'Entire apt/house'='entire home/apt',
@@ -160,11 +160,64 @@ fluidPage(
                  # )
                  ),
           column(10, plotOutput('line_price_month'))
-      ))
+        )
+      ),
+      
+      # row 4 
+      wellPanel(
+        fluidRow(
+          column(2, tags$h3('Supply'),
+                 # input 1.4.1, select suburb
+                 selectInput(
+                   inputId = 'sup_sub',
+                   label = 'Select a city/area',
+                   choices=c('All', 'Melbourne'='Melbourne',df_data$NEIGHBOURHOOD %>% unique() %>% sort()),
+                   selectize = TRUE),
+                 
+                 #input 1.4.2, supply by property type
+                 selectInput(
+                   inputId = 'sup_ptype',
+                   label='Select a property type',
+                   choices=c('All',
+                             'Apartment'='apartment',
+                             'House' = 'house',
+                             'Hotel' = 'serviced',
+                             'Other' = 'other'),
+                   multiple=FALSE,
+                   selectize = TRUE
+                 ),
+                 # input 1.4.3, supply by room type
+                 selectInput(
+                   inputId = 'sup_rtype',
+                   label='Select a room type',
+                   choices=c('All',
+                             'Entire apt/house'='entire home/apt',
+                             'Private room' = 'private room',
+                             'Shared room' = 'shared room'),
+                   multiple=FALSE,
+                   selectize = TRUE
+                 ),
+                 
+                 #input 1.4.4, select new list or not
+                 checkboxInput(
+                   inputId = 'sup_new',
+                   label = 'Show new listings only'
+                 ),
+                 
+                 #input 1.4.5, select Luxe list or not
+                 checkboxInput(
+                   inputId = 'sup_lux',
+                   label = 'Show Luxe properties* only')
+ 
+
+          ),
+          column(10, plotOutput('bar_sup_month'))
+        )
                      
-     ),
-    
+     )
+    ),
       # panel 2
-      tabPanel(title = 'By Suburb')
+      tabPanel(title = 'By Suburb',
+               tags$h3('Coming soon ..'))
           )
 )

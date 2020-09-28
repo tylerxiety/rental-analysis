@@ -7,16 +7,36 @@ names(df_data)
 summary(df_data)
 
 
+df_sup <- df_data %>% 
+  group_by(YEAR_MONTH) %>% 
+  summarise(
+    supply = sum(AVAILABILITY_30)
+  )
+
+ggplot(df_sup, aes(x=YEAR_MONTH, y= supply))+
+  geom_col(width = 0.4,fill = 'lightyellow')+
+  labs(
+    title = 'Number of Nights Available by Month',
+    subtitle = 'The supply (number of nights available) generally decreased in the first 6 months of this year',
+    x='Month',
+    y='Number of nights available'
+    
+  )+
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=12,face="bold"),
+        title=element_text(size=14,face="bold"))
+
+
 # bar, estimated supply and booked
 df_sd <- df_data %>% 
   group_by(YEAR_MONTH) %>% 
   summarise(n=n(),
-            supply = sum(AVAILABILITY_30),
-            demand = sum(BOOKED))
+            supply = sum(AVAILABILITY_30))
+            # demand = sum(BOOKED))
 
 ggplot(df_sd, aes(x=YEAR_MONTH, y= supply))+
-  geom_col(stat= "identity")+
-  geom_col(aes(x=YEAR_MONTH,y=demand),stat= "identity", width = 0.1,col = "green",fill="green")
+  geom_col(stat= "identity",width = 0.4,fill = 'lightyellow')
+  # geom_col(aes(x=YEAR_MONTH,y=demand),stat= "identity", width = 0.1,col = "green",fill="green")
 
 # treemap, neighb
 df_n <- df_data %>% group_by(NEIGHBOURHOOD) %>%
